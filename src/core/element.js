@@ -13,15 +13,15 @@ import Position from './position';
  */
 export default class Element {
   /**
-   * DOM element object
-   * @param {Node|HTMLElement} node
-   * @param {Object} options
-   * @param {Popover} popover
-   * @param {Stage} stage
-   * @param {Overlay} overlay
-   * @param {Window} window
-   * @param {Document} document
-   */
+     * DOM element object
+     * @param {Node|HTMLElement} node
+     * @param {Object} options
+     * @param {Popover} popover
+     * @param {Stage} stage
+     * @param {Overlay} overlay
+     * @param {Window} window
+     * @param {Document} document
+     */
   constructor({
     node,
     options,
@@ -42,10 +42,10 @@ export default class Element {
   }
 
   /**
-   * Checks if the current element is visible in viewport
-   * @returns {boolean}
-   * @public
-   */
+     * Checks if the current element is visible in viewport
+     * @returns {boolean}
+     * @public
+     */
   isInView() {
     let top = this.node.offsetTop;
     let left = this.node.offsetLeft;
@@ -62,16 +62,16 @@ export default class Element {
 
     return (
       top >= this.window.pageYOffset
-      && left >= this.window.pageXOffset
-      && (top + height) <= (this.window.pageYOffset + this.window.innerHeight)
-      && (left + width) <= (this.window.pageXOffset + this.window.innerWidth)
+            && left >= this.window.pageXOffset
+            && (top + height) <= (this.window.pageYOffset + this.window.innerHeight)
+            && (left + width) <= (this.window.pageXOffset + this.window.innerWidth)
     );
   }
 
   /**
-   * Manually scrolls to the position of element if `scrollIntoView` fails
-   * @private
-   */
+     * Manually scrolls to the position of element if `scrollIntoView` fails
+     * @private
+     */
   scrollManually() {
     const elementRect = this.node.getBoundingClientRect();
     const absoluteElementTop = elementRect.top + this.window.pageYOffset;
@@ -81,38 +81,38 @@ export default class Element {
   }
 
   /**
-   * Brings the element to middle of the view port if not in view
-   * @public
-   */
+     * Brings the element to middle of the view port if not in view
+     * @public
+     */
   bringInView() {
-    // If the node is not there or already is in view
-    if (!this.node || this.isInView()) {
-      return;
-    }
+    // // If the node is not there or already is in view
+    // if (!this.node || this.isInView()) {
+    //   return;
+    // }
 
-    // If browser does not support scrollIntoView
-    if (!this.node.scrollIntoView) {
-      this.scrollManually();
-      return;
-    }
+    // // If browser does not support scrollIntoView
+    // if (!this.node.scrollIntoView) {
+    //   this.scrollManually();
+    //   return;
+    // }
 
-    try {
-      this.node.scrollIntoView(this.options.scrollIntoViewOptions || {
-        behavior: 'instant',
-        block: 'center',
-      });
-    } catch (e) {
-      // `block` option is not allowed in older versions of firefox, scroll manually
-      this.scrollManually();
-    }
+    // try {
+    //   this.node.scrollIntoView(this.options.scrollIntoViewOptions || {
+    //     behavior: 'instant',
+    //     block: 'center',
+    //   });
+    // } catch (e) {
+    //   // `block` option is not allowed in older versions of firefox, scroll manually
+    //   this.scrollManually();
+    // }
   }
 
   /**
-   * Gets the calculated position on screen, around which
-   * we need to draw
-   * @public
-   * @return {Position}
-   */
+     * Gets the calculated position on screen, around which
+     * we need to draw
+     * @public
+     * @return {Position}
+     */
   getCalculatedPosition() {
     const body = this.document.body;
     const documentElement = this.document.documentElement;
@@ -131,19 +131,19 @@ export default class Element {
   }
 
   /**
-   * Gets the popover for the current element if any
-   * @returns {Popover|*}
-   * @public
-   */
+     * Gets the popover for the current element if any
+     * @returns {Popover|*}
+     * @public
+     */
   getPopover() {
     return this.popover;
   }
 
   /**
-   * Is called when element is about to be deselected
-   * i.e. when moving the focus to next element of closing
-   * @public
-   */
+     * Is called when element is about to be deselected
+     * i.e. when moving the focus to next element of closing
+     * @public
+     */
   onDeselected(hideStage = false) {
     this.hidePopover();
 
@@ -162,11 +162,11 @@ export default class Element {
   }
 
   /**
-   * Checks if the given element is same as the current element
-   * @param {Element} element
-   * @returns {boolean}
-   * @public
-   */
+     * Checks if the given element is same as the current element
+     * @param {Element} element
+     * @returns {boolean}
+     * @public
+     */
   isSame(element) {
     if (!element || !element.node) {
       return false;
@@ -176,9 +176,9 @@ export default class Element {
   }
 
   /**
-   * Is called when the element is about to be highlighted
-   * @public
-   */
+     * Is called when the element is about to be highlighted
+     * @public
+     */
   onHighlightStarted() {
     if (this.options.onHighlightStarted) {
       this.options.onHighlightStarted(this);
@@ -186,9 +186,9 @@ export default class Element {
   }
 
   /**
-   * Is called when the element has been successfully highlighted
-   * @public
-   */
+     * Is called when the element has been successfully highlighted
+     * @public
+     */
   onHighlighted() {
     const highlightedElement = this;
     if (!highlightedElement.isInView()) {
@@ -208,9 +208,9 @@ export default class Element {
   }
 
   /**
-   * Removes the stacking context fix classes and the highlighter classes
-   * @private
-   */
+     * Removes the stacking context fix classes and the highlighter classes
+     * @private
+     */
   removeHighlightClasses() {
     this.node.classList.remove(CLASS_DRIVER_HIGHLIGHTED_ELEMENT);
     this.node.classList.remove(CLASS_POSITION_RELATIVE);
@@ -222,10 +222,10 @@ export default class Element {
   }
 
   /**
-   * Adds the highlight class on the current element and "fixes"
-   * the parent nodes if they
-   * @private
-   */
+     * Adds the highlight class on the current element and "fixes"
+     * the parent nodes if they
+     * @private
+     */
   addHighlightClasses() {
     this.node.classList.add(CLASS_DRIVER_HIGHLIGHTED_ELEMENT);
 
@@ -239,10 +239,10 @@ export default class Element {
   }
 
   /**
-   * Walks through the parents of the current element and fixes
-   * the stacking context
-   * @private
-   */
+     * Walks through the parents of the current element and fixes
+     * the stacking context
+     * @private
+     */
   fixStackingContext() {
     let parentNode = this.node.parentNode;
     while (parentNode) {
@@ -264,12 +264,12 @@ export default class Element {
       // - Filter/transform or perspective is applied
       if (
         /[0-9]+/.test(zIndex)
-        || opacity < 1
-        || (transform && transform !== 'none')
-        || (transformStyle && transformStyle !== 'flat')
-        || (transformBox && transformBox !== 'border-box')
-        || (filter && filter !== 'none')
-        || (perspective && perspective !== 'none')
+                || opacity < 1
+                || (transform && transform !== 'none')
+                || (transformStyle && transformStyle !== 'flat')
+                || (transformBox && transformBox !== 'border-box')
+                || (filter && filter !== 'none')
+                || (perspective && perspective !== 'none')
       ) {
         parentNode.classList.add(CLASS_FIX_STACKING_CONTEXT);
       }
@@ -279,10 +279,10 @@ export default class Element {
   }
 
   /**
-   * Checks if we can make the current element relative or not
-   * @return {boolean}
-   * @private
-   */
+     * Checks if we can make the current element relative or not
+     * @return {boolean}
+     * @private
+     */
   canMakeRelative() {
     const currentPosition = this.getStyleProperty('position');
     const avoidPositionsList = ['absolute', 'fixed', 'relative'];
@@ -293,44 +293,44 @@ export default class Element {
   }
 
   /**
-   * Get current element's CSS attribute value
-   * @param {string} property
-   * @returns string
-   * @private
-   */
+     * Get current element's CSS attribute value
+     * @param {string} property
+     * @returns string
+     * @private
+     */
   getStyleProperty(property) {
     return getStyleProperty(this.node, property);
   }
 
   /**
-   * Shows the stage behind the element
-   * @public
-   */
+     * Shows the stage behind the element
+     * @public
+     */
   showStage() {
     this.stage.show(this.getCalculatedPosition());
   }
 
   /**
-   * Gets the DOM Element behind this element
-   * @returns {Node|HTMLElement|*}
-   * @public
-   */
+     * Gets the DOM Element behind this element
+     * @returns {Node|HTMLElement|*}
+     * @public
+     */
   getNode() {
     return this.node;
   }
 
   /**
-   * Hides the stage
-   * @public
-   */
+     * Hides the stage
+     * @public
+     */
   hideStage() {
     this.stage.hide();
   }
 
   /**
-   * Hides the popover if possible
-   * @public
-   */
+     * Hides the popover if possible
+     * @public
+     */
   hidePopover() {
     if (!this.popover) {
       return;
@@ -340,9 +340,9 @@ export default class Element {
   }
 
   /**
-   * Shows the popover on the current element
-   * @public
-   */
+     * Shows the popover on the current element
+     * @public
+     */
   showPopover() {
     if (!this.popover) {
       return;
@@ -364,9 +364,9 @@ export default class Element {
   }
 
   /**
-   * @returns {{height: number, width: number}}
-   * @public
-   */
+     * @returns {{height: number, width: number}}
+     * @public
+     */
   getFullPageSize() {
     // eslint-disable-next-line prefer-destructuring
     const body = this.document.body;
@@ -379,10 +379,10 @@ export default class Element {
   }
 
   /**
-   * Gets the size for popover
-   * @returns {{height: number, width: number}}
-   * @public
-   */
+     * Gets the size for popover
+     * @returns {{height: number, width: number}}
+     * @public
+     */
   getSize() {
     return {
       height: Math.max(this.node.scrollHeight, this.node.offsetHeight),
